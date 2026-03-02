@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kodeks.tech - WordPress Ready</title>
+    <!-- Google Fonts: Plus Jakarta Sans (Premium, moderne og professionel) -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            yellow: '#EAB308', // Lidt dybere, mere eksklusiv gul (Tailwind yellow-500)
+                            yellowHover: '#CA8A04', // Mørkere gul til hover
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Sikrer at WordPress-temaer ikke overskriver vores font */
+        #kodeks-app, #kodeks-app button, #kodeks-app input, #kodeks-app textarea {
+            font-family: '"Plus Jakarta Sans"', sans-serif !important;
+        }
+        .page-section { display: none; }
+        .page-section.active { display: block; }
+        .fade-in { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .yellow-highlight {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+        }
+        .yellow-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 6px;
+            left: -2px;
+            right: -2px;
+            height: 30%;
+            background-color: #EAB308;
+            opacity: 0.25;
+            z-index: -1;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+<div id="kodeks-app" class="min-h-screen text-slate-900 antialiased">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 transition-all">
+        <div class="max-w-5xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="javascript:void(0)" onclick="navigateTo('home')" class="group flex items-center">
+                <span class="text-xl font-bold tracking-tight text-slate-900">
+                    KODEKS<span class="text-brand-yellow">.</span>TECH
+                </span>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-10">
+                <button onclick="navigateTo('articles')" class="nav-link text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors" data-page="articles">Medie</button>
+                <button onclick="navigateTo('courses')" class="nav-link text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors" data-page="courses">Akademi</button>
+                <button onclick="navigateTo('about')" class="nav-link text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors" data-page="about">Om os</button>
+                <button onclick="navigateTo('contact')" class="nav-link text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors" data-page="contact">Kontakt</button>
+                <button id="lang-toggle" onclick="toggleLanguage()" class="ml-2 px-3 py-1.5 bg-slate-100 border border-slate-200 rounded-md text-xs font-bold text-slate-600 hover:bg-slate-200 transition-colors">
+                    EN
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Sections -->
+    <main>
+        <!-- FORSIDE -->
+        <section id="home" class="page-section active fade-in">
+            <div class="pt-48 pb-32 px-6 max-w-5xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-bold text-slate-900 leading-[1.15] mb-8 tracking-tight">
+                    Klarhed i et <br />
+                    <span class="yellow-highlight italic pr-2">komplekst</span> marked.
+                </h1>
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-10">
+                    <p class="max-w-lg text-lg text-slate-600 leading-relaxed font-normal">
+                        Kodeks.tech leverer præcis indsigt i tech-jura gennem uafhængig journalistik og specialiserede kurser til professionelle.
+                    </p>
+                    <div class="flex gap-4">
+                        <button onclick="navigateTo('courses')" class="px-8 py-3.5 bg-brand-yellow hover:bg-brand-yellowHover text-white text-sm font-semibold rounded-lg transition-colors shadow-sm flex items-center gap-2">
+                            Se Akademi
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </button>
+                        <button onclick="navigateTo('articles')" class="px-8 py-3.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg hover:border-slate-400 hover:text-slate-900 transition-colors">
+                            Læs Mediet
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MEDIE -->
+        <section id="articles" class="page-section fade-in">
+            <div class="max-w-5xl mx-auto px-6 py-40">
+                <header class="mb-20">
+                    <div class="text-brand-yellow text-sm font-semibold mb-4 flex items-center gap-3">
+                        <div class="w-8 h-[2px] bg-brand-yellow"></div> 
+                        Nyheder & Analyser
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">Indsigt & Udsyn.</h1>
+                    <p class="text-lg text-slate-600 max-w-2xl leading-relaxed">Uafhængig og dybdegående dækning af lovgivningen bag morgendagens teknologi.</p>
+                </header>
+                <div class="space-y-6" id="article-list"></div>
+            </div>
+        </section>
+
+        <!-- AKADEMI -->
+        <section id="courses" class="page-section fade-in">
+            <div class="max-w-5xl mx-auto px-6 py-40">
+                <header class="mb-20 text-center flex flex-col items-center">
+                    <span class="inline-block px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-full mb-6">Kodeks Akademi</span>
+                    <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">Uddannelse til <br />den digitale elite.</h1>
+                    <p class="text-lg text-slate-600 max-w-xl">Opgrader dit teams kompetencer med vores specialiserede kurser i tech-jura.</p>
+                </header>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="course-list"></div>
+            </div>
+        </section>
+
+        <!-- OM OS -->
+        <section id="about" class="page-section fade-in">
+            <div class="max-w-3xl mx-auto px-6 py-40">
+                <div class="text-brand-yellow text-sm font-semibold mb-6 flex items-center gap-3">
+                    <div class="w-8 h-[2px] bg-brand-yellow"></div> 
+                    Vores Mission
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-10 leading-tight text-slate-900">Vi bygger bro mellem <br />kode og paragraffer.</h1>
+                <div class="space-y-8 text-lg font-normal leading-relaxed text-slate-600">
+                    <p>Hos <strong class="text-slate-900 font-semibold">Kodeks.tech</strong> tror vi på, at den største barriere for innovation i dag ikke er teknologi, men forståelsen af de regulatoriske rammer.</p>
+                    <p>Vi er en platform dedikeret til at sikre, at jurister, beslutningstagere og tech-professionelle taler samme sprog. Ved at levere præcis, anvendelig viden fjerner vi kompleksiteten og skaber retning.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- KONTAKT -->
+        <section id="contact" class="page-section fade-in">
+            <div class="max-w-5xl mx-auto px-6 py-40">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
+                    <div>
+                        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-8 text-slate-900">Kontakt.</h1>
+                        <p class="text-slate-600 text-lg mb-12 leading-relaxed">Har du spørgsmål til vores kurser, brug for et skræddersyet forløb, eller har du et tip til redaktionen?</p>
+                        <div class="space-y-2">
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Direkte E-mail</p>
+                            <p class="text-2xl font-bold text-slate-900 hover:text-brand-yellow transition-colors cursor-pointer">hello@kodeks.tech</p>
+                        </div>
+                    </div>
+                    <div class="p-8 md:p-10 bg-white border border-slate-200 rounded-2xl shadow-sm">
+                        <div class="space-y-5">
+                            <div class="space-y-1.5">
+                                <label class="text-xs font-semibold text-slate-700">Fulde navn</label>
+                                <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm focus:bg-white focus:ring-2 focus:ring-brand-yellow focus:border-transparent outline-none transition-all">
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="text-xs font-semibold text-slate-700">E-mail adresse</label>
+                                <input type="email" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm focus:bg-white focus:ring-2 focus:ring-brand-yellow focus:border-transparent outline-none transition-all">
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="text-xs font-semibold text-slate-700">Din besked</label>
+                                <textarea rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm focus:bg-white focus:ring-2 focus:ring-brand-yellow focus:border-transparent outline-none resize-none transition-all"></textarea>
+                            </div>
+                            <button class="w-full py-3.5 mt-2 bg-slate-900 text-white font-semibold text-sm rounded-lg hover:bg-slate-800 transition-colors shadow-sm">Send besked</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ARTIKEL DETALJESIDE (Erstatter Backend-sektionen) -->
+        <section id="article-detail" class="page-section fade-in">
+            <div class="max-w-3xl mx-auto px-6 py-40">
+                <button onclick="navigateTo('articles')" class="text-brand-yellow text-sm font-semibold mb-8 flex items-center gap-2 hover:text-brand-yellowHover transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    Tilbage til oversigten
+                </button>
+                <div id="article-content-container">
+                    <!-- Indhold genereres af JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 py-16 px-6 bg-slate-50">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+                <span class="text-xl font-bold tracking-tight mb-2 block text-slate-900">KODEKS<span class="text-brand-yellow">.</span>TECH</span>
+                <p class="text-sm text-slate-500">Uafhængig platform for krydsfeltet mellem jura og teknologi.</p>
+            </div>
+            <div class="text-xs font-semibold text-slate-400">© 2024 KODEKS.TECH</div>
+        </div>
+    </footer>
+</div>
+
+<script>
+    // --- SUPABASE KONFIGURATION ---
+    // Indsæt dine Supabase URL og Anon Key her, når du er klar til at forbinde din database.
+    const SUPABASE_URL = 'INDSÆT_DIN_SUPABASE_URL_HER';
+    const SUPABASE_ANON_KEY = 'INDSÆT_DIN_SUPABASE_ANON_KEY_HER';
+    // Eksempel på initiering når biblioteket er loadet: 
+    // const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // --- SPROG (I18N) LOGIK ---
+    let currentLang = 'da';
+    const translations = {
+        da: { navMedie: "Medie", navAkademi: "Akademi", navOm: "Om os", navKontakt: "Kontakt" },
+        en: { navMedie: "Media", navAkademi: "Academy", navOm: "About", navKontakt: "Contact" }
+    };
+
+    function toggleLanguage() {
+        // Skift state
+        currentLang = currentLang === 'da' ? 'en' : 'da';
+        
+        // Opdater knap-tekst
+        document.getElementById('lang-toggle').innerText = currentLang === 'da' ? 'EN' : 'DK';
+        
+        // Opdater navigationstekster som et eksempel på virkning
+        document.querySelector('[data-page="articles"]').innerText = translations[currentLang].navMedie;
+        document.querySelector('[data-page="courses"]').innerText = translations[currentLang].navAkademi;
+        document.querySelector('[data-page="about"]').innerText = translations[currentLang].navOm;
+        document.querySelector('[data-page="contact"]').innerText = translations[currentLang].navKontakt;
+        
+        // NB: For en fuld oversættelse kan du udvide `translations`-objektet og opdatere andre elementer her.
+    }
+
+    const articles = [
+        { 
+            id: 1, 
+            title: "AI-forordningen: Nye krav til gennemsigtighed", 
+            category: "Regulering", 
+            date: "12. Maj 2024", 
+            excerpt: "Hvordan de nye regler påvirker europæiske tech-virksomheder i praksis og hvilke skridt du skal tage nu.",
+            content: "<p class='mb-5'>Europa-Parlamentet har endelig vedtaget AI-forordningen. Dette markerer et afgørende øjeblik for tech-industrien. Forordningen indfører en risikobaseret tilgang til kunstig intelligens, hvor systemer klassificeres i fire kategorier: uacceptabel risiko, høj risiko, begrænset risiko og minimal risiko.</p><p class='mb-5'>For danske virksomheder betyder det et øget krav til compliance, særligt hvis man udvikler eller anvender højrisiko-systemer. Dokumentationskravene vil blive markant skærpet, og det er afgørende at implementere 'AI compliance by design' fra starten af udviklingsfasen.</p>"
+        },
+        { 
+            id: 2, 
+            title: "Dataoverførsel til USA efter Privacy Framework", 
+            category: "Data", 
+            date: "10. Maj 2024", 
+            excerpt: "En gennemgang af de nyeste retningslinjer for sikker overførsel, og hvordan I undgår compliance-fælder.",
+            content: "<p class='mb-5'>Efter længere tids usikkerhed i kølvandet på Schrems II-dommen, har EU-Kommissionen vedtaget en afgørelse om tilstrækkeligheden af beskyttelsesniveauet for EU-US Data Privacy Framework.</p><p class='mb-5'>Dette giver et nyt juridisk grundlag for overførsel af personoplysninger til USA. Men det betyder ikke, at virksomheder bare kan læne sig tilbage. Man skal stadig sikre sig, at den amerikanske modtager er certificeret under det nye framework, og man skal løbende holde øje med retspraksis, da rettighedsorganisationer allerede truer med en 'Schrems III' sag.</p>"
+        },
+        { 
+            id: 3, 
+            title: "Smart Contracts og den danske aftaleret", 
+            category: "Tech-jura", 
+            date: "05. Maj 2024", 
+            excerpt: "Er koden stærk nok til at erstatte den juridiske underskrift? En analyse af nyeste retspraksis.",
+            content: "<p class='mb-5'>Smart contracts, der afvikles på en blockchain, rejser en række interessante spørgsmål i relation til traditionel dansk aftaleret. Hvornår er et tilbud bindende? Hvordan håndteres ugyldighedsgrunde som svig eller udnyttelse i en autonom kode?</p><p class='mb-5'>Vores seneste analyse viser, at selvom koden er 'lov' i det tekniske økosystem, vil domstolene stadig anvende almindelige aftaleretlige principper. Det betyder, at en part ikke nødvendigvis kan påberåbe sig 'code is law', hvis koden udfører en handling, der åbenlyst strider mod hæderlig forretningsskik.</p>"
+        }
+    ];
+
+    const courses = [
+        { id: 1, title: "IT-kontraktstyring", type: "Certificering", price: "12.500 kr." },
+        { id: 2, title: "GDPR for Produktudviklere", type: "Workshop", price: "6.800 kr." },
+        { id: 3, title: "Legal Tech Implementering", type: "Masterclass", price: "4.500 kr." }
+    ];
+
+    function navigateTo(pageId) {
+        document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        
+        document.querySelectorAll('.nav-link').forEach(link => {
+            if(link.dataset.page === pageId) {
+                link.classList.add('text-slate-900');
+                link.classList.remove('text-slate-500');
+            } else {
+                link.classList.remove('text-slate-900');
+                link.classList.add('text-slate-500');
+            }
+        });
+        window.scrollTo(0, 0);
+    }
+
+    // Funktion til at åbne en specifik artikel
+    function openArticle(id) {
+        const article = articles.find(a => a.id === id);
+        if (!article) return;
+
+        const container = document.getElementById('article-content-container');
+        container.innerHTML = `
+            <div class="mb-8 border-b border-slate-100 pb-8">
+                <span class="inline-flex w-fit px-2.5 py-1 bg-slate-100 text-[10px] font-semibold text-slate-600 uppercase tracking-wider rounded-md mb-4">${article.category}</span>
+                <p class="text-sm text-slate-500 font-medium mb-3">${article.date}</p>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 text-slate-900 leading-tight">${article.title}</h1>
+            </div>
+            <div class="text-lg text-slate-600 font-normal leading-relaxed">
+                ${article.content}
+            </div>
+        `;
+        
+        navigateTo('article-detail');
+    }
+
+    // Render Indhold
+    const artList = document.getElementById('article-list');
+    articles.forEach(art => {
+        artList.innerHTML += `
+            <div onclick="openArticle(${art.id})" class="group cursor-pointer grid grid-cols-1 md:grid-cols-4 gap-6 p-6 border border-slate-100 hover:border-slate-300 hover:shadow-sm bg-white transition-all rounded-xl">
+                <div class="md:col-span-1 flex flex-col justify-center">
+                    <p class="text-xs text-slate-500 font-medium mb-3">${art.date}</p>
+                    <span class="inline-flex w-fit px-2.5 py-1 bg-slate-100 text-[10px] font-semibold text-slate-600 uppercase tracking-wider rounded-md">${art.category}</span>
+                </div>
+                <div class="md:col-span-3">
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-brand-yellow transition-colors leading-tight text-slate-900">${art.title}</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">${art.excerpt}</p>
+                </div>
+            </div>
+        `;
+    });
+
+    const courseList = document.getElementById('course-list');
+    courses.forEach(c => {
+        courseList.innerHTML += `
+            <div class="group bg-white border border-slate-200 p-8 flex flex-col justify-between hover:border-brand-yellow hover:shadow-md transition-all duration-300 rounded-2xl">
+                <div>
+                    <span class="inline-block px-2.5 py-1 bg-yellow-50 text-brand-yellow text-[10px] font-bold uppercase tracking-wider rounded-md mb-6">${c.type}</span>
+                    <h3 class="text-xl font-bold mb-10 leading-snug text-slate-900">${c.title}</h3>
+                </div>
+                <div class="flex justify-between items-center border-t border-slate-100 pt-6 mt-4">
+                    <span class="text-base font-bold text-slate-900">${c.price}</span>
+                    <button class="h-10 w-10 rounded-full bg-slate-50 border border-slate-200 text-slate-600 flex items-center justify-center group-hover:bg-brand-yellow group-hover:border-brand-yellow group-hover:text-white transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+</script>
+</body>
+</html>
